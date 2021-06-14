@@ -3,16 +3,19 @@
 #include <cstring>
 #include <iomanip>
 #include <iterator>
-#include "json/JsonValue.h"
-#include "json/Handler.h"
-#include "json/ParseException.h"
-#include "json/StringReadStream.h"
-#include "json/FileWriteStream.h"
-#include "json/JsonCompactWriter.h"
-#include "json/JsonPrettyWriter.h"
-#include "json/JsonReader.h"
-#include "json/JsonSample.h"
-#include "json/Document.h"
+
+//#include "json/JsonValue.h"
+//#include "json/ParseException.h"
+//#include "json/StringReadStream.h"
+//#include "json/FileWriteStream.h"
+//#include "json/JsonCompactWriter.h"
+//#include "json/JsonPrettyWriter.h"
+//#include "json/JsonReader.h"
+//#include "json/Document.h"
+#include "json/TinyJson.h"
+
+#include "JsonSample.h"
+#include "Handler.h"
 using namespace std;
 using namespace json;
 
@@ -188,18 +191,32 @@ void testWriter() {
   cout << endl;
 }
 
-//void testPrettyWriter() {
-//  StringReadStream is(jsonSampleStr3);
-//  Document document;
-//  auto err = document.parseStream(is);
-//  if (err != PARSE_OK)
-//    cerr << parseErrorStr(err) << endl;
-//
-//  FileWriteStream fos(stdout);
-//  JsonPrettyWriter<FileWriteStream> writer(fos);
-//  document.stringify(writer);
-//  cout << endl;
-//}
+void testPrettyWriter1() {
+  StringReadStream is(jsonSampleStr3);
+  Document document;
+  auto err = document.parseStream(is);
+  if (err != PARSE_OK)
+    cerr << parseErrorStr(err) << endl;
+
+  cout << "===================" << endl;
+  FileWriteStream fos(stdout);
+  JsonPrettyWriter<FileWriteStream> writer(fos);
+  document.stringify(writer);
+  cout << endl;
+}
+
+void testPrettyWriter2() {
+  Document document;
+  auto err = document.parse(jsonSampleStr1);
+  if (err != PARSE_OK)
+    cerr << parseErrorStr(err) << endl;
+
+  cout << "===================" << endl;
+  FileWriteStream fos(stdout);
+  JsonPrettyWriter<FileWriteStream> writer(fos);
+  document.stringify(writer);
+  cout << endl;
+}
 
 int main() {
   testArray();
@@ -214,7 +231,8 @@ int main() {
   testDocument1();
   testDocument2();
   testWriter();
-//  testPrettyWriter();
+  testPrettyWriter1();
+  testPrettyWriter2();
 
   return 0;
 }

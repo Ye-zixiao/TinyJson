@@ -9,7 +9,7 @@
 #include <vector>
 #include <cassert>
 
-#include "noncopyable.h"
+#include "json/noncopyable.h"
 
 namespace json {
 
@@ -20,7 +20,7 @@ class StringWriteStream : private noncopyable {
   }
 
   void put(const std::string &str) {
-    buffer_.emplace_back(str.begin(), str.end());
+    buffer_.insert(buffer_.end(), str.begin(), str.end());
   }
 
   std::string get() const {

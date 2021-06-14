@@ -10,9 +10,9 @@
 #include <string>
 #include <vector>
 
-#include "noncopyable.h"
-#include "ParseException.h"
-#include "JsonValue.h"
+#include "json/noncopyable.h"
+#include "json/ParseException.h"
+#include "json/JsonValue.h"
 
 namespace json {
 

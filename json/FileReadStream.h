@@ -9,7 +9,7 @@
 #include <vector>
 #include <cassert>
 
-#include "noncopyable.h"
+#include "json/noncopyable.h"
 
 namespace json {
 
@@ -26,12 +26,12 @@ class FileReadStream : private noncopyable {
 
   char next() { return hasNext() ? *iter_++ : '\0'; }
 
-  char peek() { hasNext() ? *iter_ : '\0'; }
+  char peek() { return hasNext() ? *iter_ : '\0'; }
 
   Iterator getIter() const { return iter_; }
 
   void assertNext(char ch) {
-    assert(peek() = ch);
+    assert(peek() == ch);
     next();
   }
 
@@ -41,7 +41,7 @@ class FileReadStream : private noncopyable {
     while (true) {
       size_t n = fread(buf, 1, sizeof(buf), ifile);
       if (n == 0) break;
-      buffer_.emplace_back(buf, buf + n);
+      buffer_.insert(buffer_.end(), buf, buf + n);
     }
   }
 

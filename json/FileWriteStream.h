@@ -8,7 +8,7 @@
 #include <cstdio>
 #include <string>
 
-#include "noncopyable.h"
+#include "json/noncopyable.h"
 
 namespace json {
 

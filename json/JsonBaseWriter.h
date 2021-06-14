@@ -10,14 +10,17 @@
 #include <cmath>
 #include <cassert>
 #include <stack>
+#include <cstring>
 
-#include "noncopyable.h"
+#include "json/noncopyable.h"
 
 namespace json {
 
 template<typename WriteStream>
 class JsonBaseWriter : private noncopyable {
  protected:
+  using ValueType = JsonValue::ValueType;
+
   explicit JsonBaseWriter(WriteStream &os)
       : os_(os),
         stack_(),
@@ -80,7 +83,7 @@ class JsonBaseWriter : private noncopyable {
             os_.put(buf);
           } else os_.put(c);
           break;
-          // TODO
+          // TODO encode utf-8 like "\u1234"
       }
     }
     os_.put('\"');
@@ -101,7 +104,6 @@ class JsonBaseWriter : private noncopyable {
     size_t valueCnt_;
   };
 
- protected:
   WriteStream &os_;
   std::stack<Level> stack_;
   bool hasValue_;

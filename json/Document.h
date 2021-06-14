@@ -8,9 +8,9 @@
 #include <string>
 #include <stack>
 
-#include "JsonValue.h"
-#include "JsonReader.h"
-#include "StringReadStream.h"
+#include "json/JsonValue.h"
+#include "json/JsonReader.h"
+#include "json/StringReadStream.h"
 
 namespace json {
 
@@ -101,7 +101,6 @@ class Document : public JsonValue {
 //  }
 
   JsonValue *addValue(JsonValue &&value) {
-    auto type = value.getType();
     if (hasValue_)
       assert(!stack_.empty() && "Root Not Singular");
     else {

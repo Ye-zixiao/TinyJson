@@ -5,7 +5,7 @@
 #ifndef JSON_JSON_JSONCOMPACTWRITER_H_
 #define JSON_JSON_JSONCOMPACTWRITER_H_
 
-#include "JsonBaseWriter.h"
+#include "json/JsonBaseWriter.h"
 
 namespace json {
 
@@ -19,43 +19,43 @@ class JsonCompactWriter : public JsonBaseWriter<WriteStream> {
       : JsonBaseWriter<WriteStream>(os) {}
 
   bool putNull() {
-    prefix(ValueType::TYPE_NULL);
+    compactPrefix(ValueType::TYPE_NULL);
     Base::writeNull();
     return true;
   }
 
   bool putBool(bool b) {
-    prefix(ValueType::TYPE_BOOL);
+    compactPrefix(ValueType::TYPE_BOOL);
     Base::writeBool(b);
     return true;
   }
 
   bool putInt32(int32_t i32) {
-    prefix(ValueType::TYPE_INT32);
+    compactPrefix(ValueType::TYPE_INT32);
     Base::writeInt32(i32);
     return true;
   }
 
   bool putInt64(int64_t i64) {
-    prefix(ValueType::TYPE_INT64);
+    compactPrefix(ValueType::TYPE_INT64);
     Base::writeInt64(i64);
     return true;
   }
 
   bool putDouble(double d) {
-    prefix(ValueType::TYPE_DOUBLE);
+    compactPrefix(ValueType::TYPE_DOUBLE);
     Base::writeDouble(d);
     return true;
   }
 
   bool putString(std::string str) {
-    prefix(ValueType::TYPE_STRING);
+    compactPrefix(ValueType::TYPE_STRING);
     Base::writeString(std::move(str));
     return true;
   }
 
   bool putArrayStart() {
-    prefix(ValueType::TYPE_ARRAY);
+    compactPrefix(ValueType::TYPE_ARRAY);
     Base::stack_.template emplace(true);
     Base::writeArrayStart();
     return true;
@@ -70,7 +70,7 @@ class JsonCompactWriter : public JsonBaseWriter<WriteStream> {
   }
 
   bool putObjectStart() {
-    prefix(ValueType::TYPE_OBJECT);
+    compactPrefix(ValueType::TYPE_OBJECT);
     Base::stack_.template emplace(false);
     Base::writeObjectStart();
     return true;
@@ -89,7 +89,7 @@ class JsonCompactWriter : public JsonBaseWriter<WriteStream> {
   }
 
  private:
-  void prefix(ValueType type) {
+  void compactPrefix(ValueType type) {
     if (Base::hasValue_)
       assert(!Base::stack_.empty() && "Root Not Singular");
     else
@@ -104,7 +104,7 @@ class JsonCompactWriter : public JsonBaseWriter<WriteStream> {
         Base::os_.put(',');
     } else {
       if (top.valueCnt_ & 0x1)
-        Base::os_.put(':');
+        Base::os_.put(": ");
       else {
         assert(type == JsonValue::TYPE_STRING);
         if (top.valueCnt_ > 0)

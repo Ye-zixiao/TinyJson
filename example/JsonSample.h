@@ -128,7 +128,9 @@ const char jsonSampleStr3[] =
     "\"age\":32,"
     "\"money\":2147483641,"
     "\"scoreA\":3.232,"
-    "\"scoreB\":423}";
+    "\"scoreB\":423,"
+    "\"array\":[\"joker\",3.14,4233,\"coder\"],"
+    "\"wife\":{\"name\":\"hll\"}}";
 
 const char jsonSampleStr4[] =
     "{"

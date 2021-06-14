@@ -8,7 +8,7 @@
 #include <string>
 #include <cassert>
 
-#include "noncopyable.h"
+#include "json/noncopyable.h"
 
 namespace json {
 
